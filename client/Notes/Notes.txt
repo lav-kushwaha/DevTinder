@@ -1,0 +1,279 @@
+Q.What is CORS error?
+A CORS origin error happens when a web app tries to request resources from a different domain, but the server doesn’t allow it. 
+This is due to browser security rules (Same-Origin Policy). 
+To fix it, the server must enable CORS by allowing the requesting origin in its response headers.
+
+Q.Axios Sends Data:
+When the user clicks the Login button, the handleSignin function is triggered.
+This function sends the current state values (emailId and password) to the backend API using axios.post().
+
+Q. Why Use value={emailId} and onChange?
+This is called a controlled component in React.
+value={emailId}: Binds the input’s value to the React state. This ensures React is always in control of the data shown in the input field.
+onChange={(e) => setEmailId(e.target.value)}: Updates the React state whenever the user types something new.
+
+Q.Controlled Components:(V.IMP)
+
+Definition: Form elements (like <input>, <textarea>, <select>) whose value is controlled by React state.
+
+🔗 Key Concepts:
+
+1.value={state}:
+    
+Binds the input’s value to React state.
+Ensures React controls the UI.
+    
+2.onChange={handler}:
+
+Updates the state when the user types.
+Example: onChange={(e) => setEmail(e.target.value)}
+
+3.State Binding (Two-Way Data Binding): (V.IMP)
+The data flows from the state to the UI (value={emailId}) and
+from the UI to the state (onChange={...}).
+
+Inshort :
+UI → State: User input triggers onChange → updates state.
+State → UI: State updates trigger re-render → updates UI.
+
+🚀 Example:
+jsx 
+const [email, setEmail] = useState(""); //React State
+<input 
+  type="email" 
+  value={email}  //Binds the input’s value to the React state.
+  onChange={(e) => setEmail(e.target.value)} 
+/>
+
+🎯 Why Use Controlled Components?
+Real-time form validation.
+Easier to manage dynamic forms.
+React has a single source of truth (state).
+Better for conditional rendering and complex UI.
+
+Q: How Can We Save Cookies in the Browser? (v.IMP)
+=>To save cookies (like JWT tokens, session IDs, etc.) from the backend to the browser, you need to handle both backend (CORS) and frontend (Axios) configurations correctly.
+
+🔑 1️⃣ Backend (CORS) Setup:
+You must allow cross-origin requests with credentials (cookies).
+app.use(cors({
+    origin: "http://localhost:5173",  // Frontend URL
+    credentials: true                 // Allow cookies to be sent
+}));
+
+origin: Specifies which frontend is allowed to access the API.
+credentials: true: Enables cookies, authorization headers, and TLS certificates to be included in requests.
+
+🚀 2️⃣ Frontend (Axios) Setup:
+When making requests with Axios, enable withCredentials to allow cookies to be included in requests and responses.
+const res = await axios.post(
+  "http://localhost:3000/login",
+  { emailId, password },
+  { withCredentials: true }   // Send cookies with the request
+);
+
+withCredentials: true:
+Sends cookies from the browser to the backend.
+Receives cookies set by the backend.
+
+🍪 3️⃣ Backend (Setting Cookies):
+Make sure the backend is setting cookies correctly in the response.
+
+res.cookie("token", token, {
+    httpOnly: true,       // Prevents JavaScript access (XSS protection)
+    secure: false,        // Set to true in production (for HTTPS)
+    sameSite: "lax"       // Controls cross-site sending (lax, strict, none)
+});
+
+#Flow Summary:
+Frontend → Backend: Sends credentials with withCredentials: true.
+Backend: Responds with a Set-Cookie header.
+Browser: Automatically stores the cookie.
+
+#Common Mistakes to Avoid:
+Missing credentials: true in CORS (backend).
+Forgetting withCredentials: true in Axios (frontend).
+Incorrect sameSite policy when working with cross-origin requests.
+Using secure: true on localhost without HTTPS.
+
+===========================================================================================================================================================================================================================================================
+
+#Redux Steps :
+- configureStore => Provider => createSlice => add reducer to store
+- {configureStore}, {createSlice} comes from @reduxjs/toolkit
+- {Provider}, {useDispatch} comes from react-redux.
+- If we have to store data into Redux store, we use the react-redux hook called useDispatch().
+- We dispatch an action to add data into the Redux store.
+- If we have to see data, we can use the Chrome extension for Redux or browser Redux tools – action, state, diff.
+- Use useSelector to read data from redux store and pass into navbar/photourl
+
+#Redux with Axios & Navigation.(V.V.V.IMP)
+- Whenever we use Axios to fetch data from the database, we often need to pass that data to several components. For state management, we use Redux.
+- We dispatch actions to add the fetched data to the Redux store. The data we add is fetched from the database using Axios.
+- When we dispatch an action (e.g., login API), we redirect the page using the useNavigate hook, which comes from react-router-dom (RRD).
+- We use useSelector to select or read data from Redux and pass it to components where required (e.g., NavBar for photoUrl).
+
+#useDispatch()
+Purpose: Dispatches actions to the Redux store to update the state.
+Usage:
+const dispatch = useDispatch();
+dispatch(actionCreator(payload));  // Dispatch an action
+
+#useSelector()
+Purpose: Accesses the Redux store state to get data in a component.
+Usage:
+const stateData = useSelector((state) => state.someSlice);
+
+#Key Points:
+-useDispatch() is used to send actions to the store.
+-useSelector() is used to read data from the store.
+
+===========================================================================================================================================================================================================================================================
+
+#Redux Flow
+
+1.configureStore → Create the Redux store.
+2.Provider → Wraps the app to give access to the store.
+3.createSlice → Defines state + reducers (actions).
+4.useDispatch() → Sends actions to update the state.
+5.useSelector() → Reads data from the store.
+
+#Key Imports
+
+From @reduxjs/toolkit:
+- configureStore → Sets up the store.
+- createSlice → Creates reducers & actions.
+
+From react-redux:
+- Provider → Connects React with Redux.
+- useDispatch → Dispatches actions.
+- useSelector → Selects state.
+
+===========================================================================================================================================================================================================================================================
+
+#⚡Redux Workflow Simplified
+
+1. Configure the Store
+   - Use `configureStore` from `@reduxjs/toolkit` to create the Redux store.  
+   - This store holds your app's global state.  
+   import { configureStore } from '@reduxjs/toolkit';
+   import userReducer from './utils/userSlice';
+
+   const appStore = configureStore({
+     reducer: {
+       user: userReducer,
+     },
+   });
+   export default appStore;
+
+2. Provide the Store 
+   - Wrap your entire React app with `<Provider>` from `react-redux`.  
+   - This makes the Redux store available throughout the component tree.  
+   import { Provider } from 'react-redux';
+   import appStore from './utils/appStore';
+
+   <Provider store={appStore}>
+     <App />
+   </Provider>
+
+3. Create a Slice (State + Reducers)
+
+   - Use `createSlice` from `@reduxjs/toolkit` to define state and actions.  
+   - A slice contains: `name`, `initialState`, and `reducers` (actions).  
+
+   import { createSlice } from '@reduxjs/toolkit';
+   const userSlice = createSlice({
+     name: 'user',
+     initialState: null,
+     reducers: {
+       addUser: (state, action) => action.payload,
+       removeUser: () => null,
+     },
+   });
+
+   export const { addUser, removeUser } = userSlice.actions;
+   export default userSlice.reducer;
+
+4. Dispatch Actions to Update State
+   - Use `useDispatch` from `react-redux` to send actions to the store.  
+   - This updates the Redux state.  
+
+   import { useDispatch } from 'react-redux';
+   import { addUser } from './utils/userSlice';
+
+   const dispatch = useDispatch();
+   dispatch(addUser({ name: 'Krish', email: 'krish@gmail.com' }));
+
+5. Read Data from the Store
+   - Use `useSelector` from `react-redux` to access the Redux state in components.  
+   import { useSelector } from 'react-redux';
+
+   const user = useSelector((state) => state.user);
+   console.log(user);  // { name: 'Krish', email: 'krish@gmail.com' }
+
+6. Debug Using Redux DevTools 
+   - Install the [Redux DevTools extension](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd) for Chrome.  
+   - This helps monitor dispatched actions, current state, and the state’s history.
+
+#Important Points for Interviews
+- Single Source of Truth: Global state is centralized in Redux.
+- Immutable State: State is never modified directly.
+- Pure Functions: Reducers are pure functions (no side effects).
+- Redux DevTools: Helps debug actions & state changes.
+- Thunk Middleware: For handling async operations (API calls).
+
+#Common Interview Questions
+- What is Redux and why is it used?
+- Difference between useState and Redux?
+- How does useDispatch and useSelector work?
+- Explain createSlice and configureStore.
+- How do you handle async calls in Redux?
+
+===========================================================================================================================================================================================================================================================
+
+#📌Short Note on `credentials` in Frontend & Backend
+
+- Purpose:
+  `credentials` are used to **send and receive cookies** (like auth tokens) between the frontend and backend, especially in **cross-origin requests**.
+
+
+#✅Frontend (`withCredentials: true`)
+
+- Usage:
+
+  axios.post(URL, data, { withCredentials: true });
+
+- Purpose: 
+  - Sends cookies (e.g., session tokens) with HTTP requests.  
+  - Ensures browser includes cookies in API calls.
+
+#✅Backend (`credentials: true` in CORS)
+
+- Usage: 
+
+  app.use(cors({
+      origin: "http://localhost:3000",
+      credentials: true
+  }));
+
+- Purpose:
+  - Allows the server to accept cookies from cross-origin requests.  
+  - Enables setting cookies via `Set-Cookie` header.
+
+#🚀Flow: 
+1. Login: Frontend sends request → Backend sets cookie → Browser stores it.  
+2. Authenticated Requests:** Frontend sends cookies with requests.  
+3. Logout: Frontend requests logout → Backend clears the cookie.
+
+
+#⚠️Without `credentials`:
+- Cookies won’t be sent or accepted → Auth issues.
+
+===========================================================================================================================================================================================================================================================
+Note : use && operator whenever you are passing data from API bcs sometimes it takes some time and initially it is undefined.
+ex- 
+- user && (jsx)
+- learn about status code.
+- use curly brackets whenever you are using js in jsx.
+- Use {} empty if you don't want to send any data in the post api.
+- BACKEND : ID,SCHEMA,MODEL,ROUTER,REDUX AND API CODE.

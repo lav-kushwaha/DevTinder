@@ -1,0 +1,26 @@
+#How Authentication Works:
+
+1.When a user logs in, the server validates the user's credentials and creates a TOKEN (e.g., a session ID or JWT). This token is then attached to a cookie and sent back to the browser.
+2.The browser stores the cookie automatically.
+3.For any subsequent requests made by the browser, the cookie (which contains the token) is sent along with the request.
+4.When the server receives the request along with the cookie, it validates the token in the cookie. If the token is valid, the server processes the request and performs the necessary actions in the application.
+5.This process ensures secure communication and maintains the user's authenticated state across requests.
+
+
+#How Authentication with Cookies Works:
+
+1.Login and Token Creation:
+The user sends their login credentials (username and password) to the server.
+If the credentials are valid, the server generates a token (e.g., a JWT or session ID) and sends it back to the client as part of the response.
+
+2.Token in Cookie:
+The token is sent back within a cookie (often an HTTP-only cookie for security purposes).
+The browser automatically stores this cookie.
+
+3.Subsequent Requests:
+For every subsequent request made by the client to the server, the browser automatically includes the cookie containing the token.
+This is how the server knows "who" the request is from.
+
+4.Validation:
+The server validates the token in the cookie (by checking its signature, expiry, or looking it up in a database if it's a session ID).
+If the token is valid, the server processes the request and performs the desired action. If not, it rejects the request.

@@ -1,0 +1,3 @@
+Schema Validation checks the value and format (e.g., is age a number? is the email valid?).
+API Validation checks if the action is allowed (e.g., can this user update the profile? is the age within an acceptable range?).
+So, schema = value & structure, API = permission & logic.

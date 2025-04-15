@@ -1,0 +1,175 @@
+#Steps:
+1.create a repository
+2.Initialize the repository
+3.node_modules, package.json, package-lock.json
+4.Install express
+5.create a server
+6.Listen to port
+7.write request handlers for /test, /hello
+8.Install nodemon and update scripts inside package.json
+
+#Read about :
+- diff between caret and tilde (^ vs ~)
+- what are dependencies
+- what is the use of "-g" while npm Install
+
+=================================================================================================================================================================================================================================================================================================================================================================
+#UserSchema And Model.
+
+const User = mongoose.model("User", userSchema);
+"User" is the model name.
+
+#userSchema
+
+userSchema is the schema that defines the structure of documents in the database.
+mongoose.model("User", userSchema) creates a MongoDB collection and allows us to interact with it.
+
+#How the Model Name Works
+
+1. Collection Naming in MongoDB
+
+The model name "User" is used by Mongoose to create a MongoDB collection.
+Mongoose automatically converts the singular model name into a plural, lowercase collection name.
+So, "User" becomes users in the MongoDB database.
+
+2. How We Use the Model
+
+The User model is an instance of mongoose.model, which allows us to interact with the users collection.
+We can create, read, update, and delete (CRUD) documents using this model.
+
+#Example: Using the User Model
+
+Once the User model is created, you can use it to perform database operations.
+
+1. Create a New User (Insert Data)
+
+const newUser = new User({
+  name: "John Doe",
+  email: "john@example.com",
+  password: "hashedpassword"
+});
+
+await newUser.save(); // Saves the user to the 'users' collection
+console.log("User created:", newUser);
+
+2. Find All Users (Retrieve Data)
+
+const users = await User.find();
+console.log("All Users:", users);
+
+3. Find a User by Email
+
+const user = await User.findOne({ email: "john@example.com" });
+console.log("User Found:", user);
+
+4. Update a User
+
+const updatedUser = await User.findOneAndUpdate(
+  { email: "john@example.com" },
+  { name: "John Updated" },
+  { new: true }
+);
+console.log("Updated User:", updatedUser);
+
+5. Delete a User
+
+await User.deleteOne({ email: "john@example.com" });
+console.log("User deleted");
+
+#Summary
+
+The model name ("User") determines the MongoDB collection name (users).
+The User model provides methods to interact with the database.
+You can perform CRUD operations using the model.
+
+=================================================================================================================================================================================================================================================================================================================================================================
+
+#Notes
+
+Steps :
+
+1.Always first connect to the database then start server or listen to the app. (IMP)
+2.Create schema - (schema is a identity for documents)(DOCS LINK :https://mongoosejs.com/docs/guide.html)
+3.About Schema :
+=>In Mongoose, a schema is a blueprint or structure for a MongoDB document. 
+=>It defines the shape and structure of the documents within a MongoDB collection, specifying the fields, their data types, and any constraints or validation rules.
+=>A schema in Mongoose is created using the mongoose.Schema class.
+4.Pass schema in mongoose.models(user,userSchema) and export.
+5.Create API and by using models create instance of models using "new" keyword and then call userInstance.save().
+6.Basically most of the mongoose function, whenever we are putting data to database or whenever we are saving, getting data all this api, its return promise so use async,await.
+7.Encrypting password - bcrypt.
+8.Read about cookies parser.
+
+=================================================================================================================================================================================================================================================================================================================================================================
+
+#express.json()
+=>We use express.json() middleware in an Express application to parse incoming JSON payloads.
+=>Its read the JSON object from postman or client side and convert into js object.
+=>express.json() uses the body-parser package internally.
+It:
+1.Reads the raw JSON payload from the request.
+2.Parses it into a JavaScript object.
+3.Attaches it to req.body.
+
+=================================================================================================================================================================================================================================================================================================================================================================
+
+#cookie-parser()
+#What is cookie-parser?
+=>cookie-parser is a middleware for Express that parses cookies attached to client requests and makes them easily accessible via req.cookies.
+=>It helps in both reading cookies sent from the client and optionally signing cookies to ensure integrity.
+
+#bcryptPassword
+
+//signup
+=>bcrypt.hash(pass,10)
+
+//login
+=>bcrypt.compare(input,user);
+
+#JSONWEBTOKEN
+//login
+=>await token = jwt.sign(userid,secretkey)
+=>res.cookie("token",token,{expires: new Date(Date.now() + 900000)}); 
+
+//userAuth
+=>await decodedData = jwt.verify(token,secretKey) //decoded data
+
+=================================================================================================================================================================================================================================================================================================================================================================
+
+#express.Router()
+- express.Router() is a feature of the Express.js framework that helps in organizing your application’s routing. 
+- It creates a mini router instance, which you can use to define routes and middleware separately from the main app. 
+- This makes your code modular and easier to maintain.
+
+#Key Uses of express.Router():
+
+1.Modular Routing: Organize routes by separating them into different files or modules.
+
+const express = require('express');
+const router = express.Router();
+
+router.get('/example', (req, res) => {
+    res.send('Hello from the router!');
+});
+
+module.exports = router;
+
+2.Middleware Usage: Attach specific middleware to certain routes or groups of routes.
+
+router.use((req, res, next) => {
+    console.log('Middleware for this router');
+    next();
+});
+
+3.Grouped Routes: Group routes logically, like for different API versions or resources.
+
+const userRouter = require('./routes/user');
+const adminRouter = require('./routes/admin');
+
+app.use('/users', userRouter); // All routes for users
+app.use('/admin', adminRouter); // All routes for admin
+
+#Benefits:
+- Separation of Concerns: Keeps the main application file clean.
+- Reusability: Makes routes reusable across different parts of the app.
+- Scalability: Helps in scaling the codebase by grouping related routes together.

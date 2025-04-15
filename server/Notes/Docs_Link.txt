@@ -1,0 +1,10 @@
+MONGOOSE-DOCS-LINK : https://mongoosejs.com/docs/guide.html
+VALIDATOR : https://www.npmjs.com/package/validator
+BCRYPT : https://www.npmjs.com/package/bcrypt
+COOKIES : https://expressjs.com/en/5x/api.html#res.cookie
+COOKIES PARSER : https://expressjs.com/id/resources/middleware/cookie-parser.html
+JSONWEBTOKEN : https://www.npmjs.com/package/jsonwebtoken
+EXPRESS-ROUTING-GUIDE : https://expressjs.com/en/guide/routing.html
+EXPRESS-ROUTER : https://expressjs.com/en/5x/api.html#express.router
+MONGOOSE-PRE : https://mongoosejs.com/docs/middleware.html#pre
+MONGOOSE-INDEXES : https://mongoosejs.com/docs/schematypes.html#indexes

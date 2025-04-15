@@ -1,0 +1,50 @@
+#When to use async await?
+
+We use async and await in our Mongoose operations because database interactions are asynchronous. 
+This means they take some time to complete, and JavaScript needs to wait for the database response before moving to the next operation.
+
+#Why Use async and await?
+
+1. Avoid Callback Hell: Instead of using nested callbacks, async/await makes the code cleaner and easier to read.
+2. Ensure Sequential Execution: Without await, JavaScript moves to the next line without waiting for the database operation to finish.
+3. Handle Promises More Easily: Mongoose functions like .save(), .find(), .updateOne(), etc., return Promises, so we use await to wait for the operation to complete.
+
+#Example Without async/await (Using Promises)
+
+User.find()
+  .then(users => console.log(users))
+  .catch(error => console.error(error));
+
+console.log("This runs before users are fetched!"); // Runs before database query completes
+
+Here, console.log("This runs before users are fetched!") may execute before the User.find() query completes.
+
+#Example With async/await
+
+async function fetchUsers() {
+  try {
+    const users = await User.find(); // Waits for the query to finish
+    console.log(users);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+fetchUsers();
+console.log("This runs after users are fetched!"); // Runs after the database query completes
+
+Now, console.log("This runs after users are fetched!") executes after users are fetched.
+
+#Breaking It Down
+
+const users = await User.find();
+User.find() → Returns a Promise (it takes time to get data from the database).
+await → Tells JavaScript to pause execution until the data is received.
+Without await, JavaScript would move to the next line before the database operation finishes.
+
+#When Should You Use async/await?
+
+Use async/await whenever you are working with:
+✅ Database operations (Mongoose, MySQL, Firebase, etc.)
+✅ API requests (Fetching data from an external API)
+✅ File system operations (Reading/writing files)
