@@ -8,3 +8,4 @@ EXPRESS-ROUTING-GUIDE : https://expressjs.com/en/guide/routing.html
 EXPRESS-ROUTER : https://expressjs.com/en/5x/api.html#express.router
 MONGOOSE-PRE : https://mongoosejs.com/docs/middleware.html#pre
 MONGOOSE-INDEXES : https://mongoosejs.com/docs/schematypes.html#indexes
+DOT-ENV : https://www.npmjs.com/package/dotenv

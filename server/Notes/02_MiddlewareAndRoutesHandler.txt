@@ -1,0 +1,30 @@
+#Middleware
+- Functions that process requests and responses before reaching route handlers.
+- Purpose: Modify `req`/`res`, perform checks, logging, or any pre-processing.
+- Behavior: 
+  - Calls `next()` to pass control to the next function.
+  - Can send a response (e.g., `res.send()`) to end the cycle.
+- Example: 
+  app.use((req, res, next) => {
+      console.log("Middleware executed");
+      next();
+  });
+
+---
+
+#Route Handler
+- A type of middleware that handles requests for specific routes and sends responses.
+- Purpose: Respond to requests for specific routes (e.g., `/user`).
+- Behavior: 
+  - Sends a response (e.g., `res.send()`).
+  - Can call `next()` to pass control to other middleware, though usually doesn't.
+- Example: 
+  app.get('/user', (req, res) => {
+      res.send('User data');
+  });
+
+---
+
+#Key Differences
+- Middleware: General-purpose, works for any route, and may not always send a response.
+- Route Handler: Specific to routes, always sends a response (or ends the cycle).

@@ -7,6 +7,8 @@ const { profileRouter } = require('./routes/profile.js');
 const {requestRouter} = require("./routes/request.js");
 const{userRouter} = require("./routes/user.js")
 const cors = require('cors');
+require('dotenv').config();
+
 
  
 //it will works for all the route.
@@ -31,7 +33,7 @@ connectDB()
     console.log("Database connection established...");  
 
     //listening port on 3000
-    app.listen(3000,()=>{
+    app.listen(process.env.PORT,()=>{
         console.log("Server is listening on port 3000..");
     });
 })
