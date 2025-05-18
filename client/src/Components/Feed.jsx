@@ -10,7 +10,7 @@ const Feed = () => {
   const feed = useSelector((store) => store.feed);
 
   const getFeed = async () => {
-    if (feed?.length) return; // Prevent re-fetching if data already exists
+    // if (feed?.length) return; // Prevent re-fetching if data already exists
     try {
       const feedData = await axios.get(BASE_URL + '/feed', {
         withCredentials: true,

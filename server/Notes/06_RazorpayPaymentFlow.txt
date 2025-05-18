@@ -1,0 +1,47 @@
+✨ Razorpay Payment Flow 
+
+1. Frontend initiates payment:
+- Frontend first calls a "Create Order" API on your backend.
+
+2. Backend creates an order:
+- Backend (server-side) uses Razorpay SDK (with Secret Key) to call Razorpay’s server and create an order.
+- Razorpay responds with an "Order ID".
+- Backend sends the "Order ID" back to the frontend.
+
+3. Frontend opens Razorpay Checkout:
+- Using the received "Order ID", frontend opens the Razorpay Payment Dialog (Checkout Popup).
+- User completes the payment (via UPI, card, netbanking, etc.).
+
+4. Payment gets completed:
+- After successful payment, Razorpay immediately responds to frontend (via "handler" callback) with:
+  - payment_id
+  - order_id
+  - signature
+
+5. Frontend calls "Payment Verify" API:
+- Frontend sends this payment_id, order_id, and signature to your backend.
+- Backend verifies the signature to confirm that the payment is genuine (using HMAC SHA256 check).
+
+6. (Optional) Razorpay Webhooks:
+- Razorpay can also notify your backend separately via Webhooks (server-to-server call) for events like:
+  - Payment success
+  - Payment failed
+- This ensures backend knows about payment even if frontend crashes or closes.
+
+APIs You Must Create:
+- POST /create-order → to create the order (Step 2)
+- POST /verify-payment → to verify payment (Step 5)
+
+We need these two APIs.
+
+Quick Visual Summary:
+Frontend → Create Order API → Backend → Razorpay → Order ID → Frontend
+Frontend → Open Payment Dialog (with Order ID)
+Frontend → On payment success → Verify Payment API → Backend → Confirm success/failure
+(Backend can also receive Webhook events separately)
+
+Bonus Tip:
+If you want very high security, always trust webhook + verify payment — because users might close the browser tab after paying!
+
+Links :
+https://razorpay.com/docs/payments/server-integration/nodejs/integration-steps/#integrate-with-razorpay-payment-gateway

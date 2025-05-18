@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const connectDB = require("./config/database.js");
 const app = express();
@@ -7,12 +8,15 @@ const { profileRouter } = require('./routes/profile.js');
 const {requestRouter} = require("./routes/request.js");
 const{userRouter} = require("./routes/user.js")
 const cors = require('cors');
-require('dotenv').config();
+const paymentRouter = require('./routes/payment.js');
 
 
+
+const PORT = process.env.PORT || 3000;
  
 //it will works for all the route.
 //express.json() middleware convert JSON code into JS Object. 
+//express.json() converts JSON data into a JavaScript object and assigns it to req.body.
 app.use(express.json());
 
 //cookie parser middleware help to read cookies from client side.
@@ -25,18 +29,16 @@ app.use(cors({
     }
 ));
 
-app.use("/",authRouter,profileRouter,requestRouter,userRouter);
+app.use("/",authRouter,profileRouter,requestRouter,userRouter,paymentRouter);
 
-//connected to mongoDB.
+// Connect DB and start server
 connectDB()
-.then(()=>{
-    console.log("Database connection established...");  
-
-    //listening port on 3000
-    app.listen(process.env.PORT,()=>{
-        console.log("Server is listening on port 3000..");
+.then(() => {
+    console.log("Database connection established...");
+    app.listen(PORT, () => {
+        console.log(`Server is listening on port ${PORT}..`);
     });
 })
-.catch((err)=>{
-    console.error("Database connection cannot be established...",err);
+.catch((err) => {
+    console.error("Database connection cannot be established...", err);
 });

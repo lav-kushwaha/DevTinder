@@ -7,6 +7,7 @@ import appStore from "./utils/appStore";
 import Feed from "./Components/Feed";
 import Connections from "./Components/Connections.jsx";
 import Request from "./Components/Request.jsx";
+import Premium from "./Components/Premium.jsx";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="profile" element={<Profile/>}></Route>
         <Route path="connections" element={<Connections/>}></Route>
         <Route path="requests" element={<Request/>}></Route>
+        <Route path="premium" element={<Premium/>}></Route>
       </Route>
       </Routes>
     </BrowserRouter>

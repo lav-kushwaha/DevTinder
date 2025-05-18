@@ -52,6 +52,13 @@ const userSchema = new mongoose.Schema({
             }
         }
     },
+    isPremium :{
+        type:Boolean,
+        default:false
+    },
+    membershipType:{
+        type:string,
+    },
     photoUrl:{
         type:String,
         default:"https://conferenceoeh.com/wp-content/uploads/profile-pic-dummy.png",

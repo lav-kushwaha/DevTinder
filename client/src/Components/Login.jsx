@@ -22,7 +22,6 @@ const Login = () => {
       const endpoint = isLoginForm ? "/login" : "/signup"; 
 
       const res = await axios.post(BASE_URL + endpoint, payload, { withCredentials: true });
-      console.log(res)
       dispatch(addUser(res?.data?.data));
        return navigate("/")
 

@@ -29,7 +29,7 @@ userRouter.get("/user/requests/received", userAuth, async(req,res)=>{
 });
 
 //user connections
-userRouter.get("/user/connections/", userAuth, async(req,res)=>{
+userRouter.get("/user/connections", userAuth, async(req,res)=>{
     try{
         const loggedInUser = req.user;
         const connectionRequests = await ConnectionRequest.find({
@@ -43,7 +43,7 @@ userRouter.get("/user/connections/", userAuth, async(req,res)=>{
 
         const data = connectionRequests.map((row)=>{
             if(row.fromUserId._id.toString() === loggedInUser._id.toString()){
-                return toUserId;
+                return row.toUserId;
             }
             return row.fromUserId
         });
@@ -53,7 +53,7 @@ userRouter.get("/user/connections/", userAuth, async(req,res)=>{
         });
 
     }catch(err){
-        res.sendStatus(400).send("ERROR "+err.message);
+        res.status(400).send("ERROR "+err.message);
     }
 });
 
