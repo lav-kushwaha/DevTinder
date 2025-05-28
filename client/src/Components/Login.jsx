@@ -23,26 +23,25 @@ const Login = () => {
 
       const res = await axios.post(BASE_URL + endpoint, payload, { withCredentials: true });
       dispatch(addUser(res?.data?.data));
-       return navigate("/")
-
+      return navigate("/feed");
     } catch (err) {
-      setError(err?.response?.data || "Something went wrong!")
-      setTimeout(()=>{
+      setError(err?.response?.data || "Something went wrong!");
+      setTimeout(() => {
         setError(null);
-      },3000)
+      }, 3000);
     }
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen">
-      <div className="card bg-base-300 shadow-lg rounded-xl p-8 w-full max-w-md">
-        <h2 className="text-center text-2xl font-bold">{isLoginForm ? "Login" : "Sign Up"}</h2>
-        <p className="text-center text-gray-500">{isLoginForm ? "Sign in to continue" : "Create an account"}</p>
+    <div className="flex items-center justify-center min-h-[80vh] px-4 sm:px-6 md:px-8 lg:px-12">
+      <div className="card bg-base-300 shadow-lg rounded-xl p-6 sm:p-8 md:p-10 w-full max-w-md">
+        <h2 className="text-center text-2xl sm:text-3xl font-bold">{isLoginForm ? "Login" : "Sign Up"}</h2>
+        <p className="text-center text-gray-500 mt-1 sm:mt-2">{isLoginForm ? "Sign in to continue" : "Create an account"}</p>
 
         <form className="mt-6 space-y-4">
           {!isLoginForm && (
-            <div className="flex gap-4">
-              <div className="w-1/2">
+            <div className="flex flex-col sm:flex-row gap-4">
+              <div className="sm:w-1/2">
                 <label className="text-sm font-medium">First Name</label>
                 <input
                   type="text"
@@ -53,7 +52,7 @@ const Login = () => {
                   required
                 />
               </div>
-              <div className="w-1/2">
+              <div className="sm:w-1/2">
                 <label className="text-sm font-medium">Last Name</label>
                 <input
                   type="text"
@@ -104,8 +103,8 @@ const Login = () => {
 
         <div className="text-center mt-5">
           <p>
-            {isLoginForm ? "New user?" : "Already have an account?"}  
-            <span 
+            {isLoginForm ? "New user?" : "Already have an account?"}
+            <span
               className="font-semibold cursor-pointer hover:underline ml-1"
               onClick={() => setIsLoginForm(!isLoginForm)}
             >

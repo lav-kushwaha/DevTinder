@@ -44,113 +44,113 @@ const EditProfile = ({ user }) => {
 
   return (
     <>
-      <div className="flex justify-center mt-5 gap-10">
-        <div className="mb-20 flex items-center justify-center">
-          <div className="card bg-base-300 w-full md:w-96 shadow-xl p-10">
+      <div className="flex flex-col md:flex-row justify-center mt-5 gap-10 px-4 md:px-0">
+        {/* Form first on medium+ screens (laptop) */}
+        <div className="order-2 md:order-1 mb-10 flex justify-center md:justify-start w-full md:w-96">
+          <div className="card bg-base-300 w-full shadow-xl p-8 md:p-10">
             <h2 className="text-center font-bold text-xl mb-4">Edit Profile</h2>
-            <div className="flex justify-center">
-              <form className="w-full">
-                <div className="mb-4">
-                  <label className="block text-sm font-medium">First Name</label>
-                  <input
-                    type="text"
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
-                    className="input input-bordered w-full mt-2 p-3"
-                    required
-                  />
-                </div>
+            <form className="w-full">
+              <div className="mb-4">
+                <label className="block text-sm font-medium">First Name</label>
+                <input
+                  type="text"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  className="input input-bordered w-full mt-2 p-3"
+                  required
+                />
+              </div>
 
-                <div className="mb-4">
-                  <label className="block text-sm font-medium">Last Name</label>
-                  <input
-                    type="text"
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
-                    className="input input-bordered w-full mt-2 p-3"
-                    required
-                  />
-                </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium">Last Name</label>
+                <input
+                  type="text"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  className="input input-bordered w-full mt-2 p-3"
+                  required
+                />
+              </div>
 
-                <div className="mb-4">
-                  <label className="block text-sm font-medium">Photo URL</label>
-                  <input
-                    type="text"
-                    value={photoUrl}
-                    onChange={(e) => setPhotoUrl(e.target.value)}
-                    className="input input-bordered w-full mt-2 p-3"
-                    required
-                  />
-                </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium">Photo URL</label>
+                <input
+                  type="text"
+                  value={photoUrl}
+                  onChange={(e) => setPhotoUrl(e.target.value)}
+                  className="input input-bordered w-full mt-2 p-3"
+                  required
+                />
+              </div>
 
-                <div className="mb-4">
-                  <label className="block text-sm font-medium">Age</label>
-                  <input
-                    type="number"
-                    value={age}
-                    onChange={(e) => setAge(e.target.value)}
-                    className="input input-bordered w-full mt-2 p-3"
-                    required
-                  />
-                </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium">Age</label>
+                <input
+                  type="number"
+                  value={age}
+                  onChange={(e) => setAge(e.target.value)}
+                  className="input input-bordered w-full mt-2 p-3"
+                  required
+                />
+              </div>
 
-                <div className="mb-4">
-                  <label className="block text-sm font-medium">Gender</label>
-                  <select
-                    value={gender}
-                    onChange={(e) => setGender(e.target.value)}
-                    className="input input-bordered w-full mt-2"
-                    required
-                  >
-                    <option value="">Select Gender</option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                    <option value="Others">Others</option>
-                  </select>
-                </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium">Gender</label>
+                <select
+                  value={gender}
+                  onChange={(e) => setGender(e.target.value)}
+                  className="input input-bordered w-full mt-2"
+                  required
+                >
+                  <option value="">Select Gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Others">Others</option>
+                </select>
+              </div>
 
-                <div className="mb-4">
-                  <label className="block text-sm font-medium">About</label>
-                  <input
-                    type="text"
-                    value={about}
-                    onChange={(e) => setAbout(e.target.value)}
-                    className="input input-bordered w-full mt-2 p-3"
-                    required
-                  />
-                </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium">About</label>
+                <input
+                  type="text"
+                  value={about}
+                  onChange={(e) => setAbout(e.target.value)}
+                  className="input input-bordered w-full mt-2 p-3"
+                  required
+                />
+              </div>
 
-                <div className="mb-4">
-                  <label className="block text-sm font-medium">Skills</label>
-                  <input
-                    type="text"
-                    value={skills}
-                    onChange={(e) => setSkills(e.target.value)}
-                    className="input input-bordered w-full mt-2 p-3"
-                    required
-                  />
-                </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium">Skills</label>
+                <input
+                  type="text"
+                  value={skills}
+                  onChange={(e) => setSkills(e.target.value)}
+                  className="input input-bordered w-full mt-2 p-3"
+                  required
+                />
+              </div>
 
-                {error && <span className="text-red-400">{error}</span>}
+              {error && <span className="text-red-400">{error}</span>}
 
-                <div className="card-actions justify-center my-4 mt-10">
-                  <button
-                    type="button"
-                    className="btn btn-primary w-full p-3"
-                    onClick={SaveProfile}
-                  >
-                    Save Profile
-                  </button>
-                </div>
-              </form>
-            </div>
+              <div className="card-actions justify-center my-4 mt-10">
+                <button
+                  type="button"
+                  className="btn btn-primary w-full p-3"
+                  onClick={SaveProfile}
+                >
+                  Save Profile
+                </button>
+              </div>
+            </form>
           </div>
         </div>
 
-        <div className="mb-5">
+        {/* Preview UserCard second on medium+ screens (laptop) */}
+        <div className="order-1 md:order-2 mb-5 w-full max-w-md mx-auto md:mx-0 md:w-auto">
           <UserCard
             user={{ firstName, lastName, photoUrl, about, age, gender, skills }}
-            showActions={false} 
+            showActions={false}
           />
         </div>
       </div>

@@ -335,3 +335,80 @@ config nginx - `sudo nano /etc/nginx/sites-available/default`
 * Ref - [https://razorpay.com/docs/payments/server-integration/nodejs/integration-steps/#integrate-with-razorpay-payment-gateway](https://razorpay.com/docs/payments/server-integration/nodejs/integration-steps/#integrate-with-razorpay-payment-gateway)
 * Ref - [https://razorpay.com/docs/webhooks/validate-test/](https://razorpay.com/docs/webhooks/validate-test/)
 * Ref - [https://razorpay.com/docs/webhooks/payloads/payments/](https://razorpay.com/docs/webhooks/payloads/payments/)
+
+# Real Time Chat using WebSocket(Socket.io)
+* Ref - https://socket.io/docs/v4/
+- Build the UI for a chat window on /chat/:targetUserId
+- Setup socket.io in backend 
+- npm  i socket.io
+
+### Steps to Use Socket.io
+
+1. **Install socket.io packages**
+
+   * Backend: `npm install socket.io`  
+   * Frontend: `npm install socket.io-client`
+
+2. **Set up Socket.io server**
+
+   * Integrate with your Node/Express server:
+
+   ```js
+   const express = require("express");
+   const http = require("http");
+   const { Server } = require("socket.io");
+
+   const app = express();
+   const server = http.createServer(app);
+   const io = new Server(server, {
+     cors: { origin: "*" },
+   });
+
+   io.on("connection", (socket) => {
+     console.log("User connected:", socket.id);
+
+     socket.on("sendMessage", (msg) => {
+       // Broadcast message to all connected clients
+       io.emit("receiveMessage", msg);
+     });
+
+     socket.on("disconnect", () => {
+       console.log("User disconnected:", socket.id);
+     });
+   });
+
+   server.listen(5000, () => {
+     console.log("Server listening on port 5000");
+   });
+   ```
+
+3. **Connect from React frontend**
+
+   ```jsx
+   import { io } from "socket.io-client";
+   const socket = io("http://localhost:PORT");
+
+   // Send message
+   socket.emit("sendMessage", message);
+
+   // Listen for messages
+   socket.on("receiveMessage", (msg) => {
+     // update chat state
+   });
+   ```
+
+4. **Manage chat state**
+
+   * Use React state/hooks to store incoming/outgoing messages.  
+   * Update the UI dynamically as messages arrive.
+
+5. **Clean up**
+
+   * Disconnect socket on component unmount:
+
+   ```jsx
+   useEffect(() => {
+     return () => socket.disconnect();
+   }, []);
+   ```
+
