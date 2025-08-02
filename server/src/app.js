@@ -26,7 +26,7 @@ app.use(cookieParser());
 
 //cors allow to server to make API calls or request from another domain.
 app.use(cors({
-    origin:"http://localhost:5173", //frontend url
+    origin:process.env.CLIENT_BASE_URL, //frontend url
     credentials:true // Allow cookies to be sent
     }
 ));
