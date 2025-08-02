@@ -1,7 +1,7 @@
 //Production
 // export const BASE_URL = "/api" //server url
 
-devtinder-backend-nu.vercel.app
+// devtinder-backend-nu.vercel.app
 
 //dev
 // export const BASE_URL = location.hostname === "localhost"?"http://localhost:3000":"/api"
