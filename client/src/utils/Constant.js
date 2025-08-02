@@ -9,5 +9,5 @@
 export const BASE_URL =
   location.hostname === "localhost"
     ? "http://localhost:3000"
-    : "https://devtinder-backend-nu.vercel.app";
+    : "https://devtinder-backend-alpha.vercel.app/";
 
