@@ -1,0 +1,1 @@
+DevTinder is a full-stack social networking platform tailored for developers. Think of it as Tinder for Devs — where developers can discover, connect, and collaborate. Users can create profiles, explore others, send connection requests, chat, and manage their profile — all in a smooth and interactive interface.
